@@ -23,9 +23,17 @@ class EmailController extends Controller
         ]);
 
         // Mail::to($request->email)->send(new UserMail($request));
-
-        dispatch(new SendMailJob((object)$request->all()));
+        // dispatch(new SendMailJob((object)$request->all()));
         
+        // $details['email'] = 'kmushakil22@gmail.com';
+        // dispatch(new SendMailJob($details));
+
+        $allusers = User::all();
+        foreach ($allusers as $key => $user) {
+            $details['email'] = $user->email;
+            $details['name'] = $user->name;
+            dispatch(new SendMailJob($details));
+        }
         return redirect()->route('admin.email')->with('success', 'New User Created Successfully!');
 
     } //End Method

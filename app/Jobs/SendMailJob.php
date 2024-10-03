@@ -13,21 +13,22 @@ use App\Mail\UserMail;
 class SendMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $request;
+    public $details;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($request)
+    public function __construct($details)
     {
-        $this->request = $request;
+        $this->details = $details;
     }
 
     /**
      * Execute the job.
      */
-    public function handle($request): void
+    public function handle()
     {
-        Mail::to($this->request->email)->send(new UserMail($this->request));
+        Mail::to($this->details['email'])->send(new UserMail($this->details));
+        
     }
 }

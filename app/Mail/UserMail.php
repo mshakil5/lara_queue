@@ -12,14 +12,14 @@ use Illuminate\Queue\SerializesModels;
 class UserMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $request;
+    public $details;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($request)
+    public function __construct($details)
     {
-        $this->request = $request;
+        $this->details = $details;
     }
 
     
