@@ -3,6 +3,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\PDFController;
 //use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -13,6 +14,11 @@ Route::get('/', function () {
     return view('admin.admin_login');
 });
 
+Route::get('/generate-pdf', function () {
+    return view('myPDF');
+});
+
+
 // Route::get('/clientList', function () {
 //     return view('admin.clientList');
 // });
@@ -20,6 +26,7 @@ Route::get('/', function () {
 //--------------------------------------------------ROUTE FOR ADMIN-----------------------------------------------------
 Route::prefix('admin')->group(function (){
 
+Route::get('/generate-pdf', [PDFController::class, 'generatePDF'])->middleware('AdminMiddleware');
 Route::get('/login', [AdminController::class,'Index'])->name('login_from');
 Route::POST('/login/owner', [AdminController::class,'Login'])->name('admin.login');
 Route::get('/clientList', [AdminController::class,'clientList'])->name('admin.clientList');
